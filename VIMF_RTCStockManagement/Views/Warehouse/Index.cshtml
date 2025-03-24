@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<h2>Warehouse</h2>
+<div class="col-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <button type="button" class="btn btn-primary" onclick="Add()">
+                <i class="bi bi-plus"></i> Add
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="border border-dark rounded-3">
+                <table class="table align-middle table-hover m-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Warehouse code</th>
+                            <th scope="col">Warehouse name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyWarehouse">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal_warehouse" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Warehouse detail
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" class="form-control" id="warehouseID" required>
+
+                    <div class="mb-3">
+                        <label for="warehouseCode" class="form-label text-start">
+                            Warehouse code <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="warehouseCode" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="warehouseName" class="form-label">
+                            Warehouse name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="warehouseName" required>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" onclick="Save()">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/warehouse.js"></script>
