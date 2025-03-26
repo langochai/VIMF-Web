@@ -3,53 +3,30 @@
     $('#btn_add').on('click', add)
     $('#btn_save').on('click', modalSave)
 });
+var table
 async function loadData() {
-    let datas = await getAll();
+    let data = await getAll();
     const areas = await getAreas()
-    datas = datas.map(data => ({
-        ...data,
-        AreaName: areas.find(a => a.Id == data.AreaId)?.AreaName
+    data = data.map(d => ({
+        ...d,
+        AreaName: areas.find(a => a.Id == d.AreaId)?.AreaName,
+        ActionHTML: `<a class="btn btn-info btn-icon btn-sm btn-edit"><i class="bi bi-pencil"></i></a>
+                     <a class="btn btn-danger btn-icon btn-sm btn-delete"><i class="bi bi-trash"></i></a>`
     }))
-    const grouped = Object.groupBy(datas, ({ AreaName }) => AreaName)
-    $('#tbody_data').empty()
-    for (let areaName in grouped) {
-        console.log(areaName);
-        const table = $(`
-        <tr>
-            <td colspan='3'>
-                <table class="table mb-0">
-                <thead>
-                <th>
-                <td colspan='3'>${areaName}</td>
-                <th>
-                </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        `)
-        grouped[areaName].forEach(postion => {
-            const row = $(`
-                <tr>
-                    <td>
-                        <a class="btn btn-info btn-icon btn-sm btn-edit">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <a class="btn btn-danger btn-icon btn-sm btn-delete">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </td>
-                    <td>${postion.PositionCode ?? ''}</td>
-                    <td>${postion.PositionName ?? ''}</td>
-                </tr>
-            `)
-            row.find('.btn-edit').on('click', edit)
-            row.find('.btn-delete').on('click', deleteData)
-            row.data('data', postion)
-            table.find('tbody').append(row)
-        })
-        $('#tbody_data').append(table)
+    if (!table) {
+        table = new Tabulator("#position_table", {
+            data: data,
+            layout: "fitColumns",
+            movableRows: true,
+            groupBy: "AreaName",
+            columns: [
+                { title: "Actions", field: "ActionHTML", formatter: "html", cellClick: cellClicked },
+                { title: "Position Code", field: "PositionCode" },
+                { title: "Position Name", field: "PositionName" },
+            ],
+        });
+    } else {
+        table.replaceData(data)
     }
 }
 async function add() {
@@ -59,14 +36,18 @@ async function add() {
     await loadAreas()
     $('#modal_position').modal('show')
 }
-async function edit() {
+async function edit(data) {
     await loadAreas()
-    const data = $(this).closest('tr').data('data')
     $('#position_id').val(data.Id ?? 0)
     $('#position_code').val(data.PositionCode ?? '')
     $('#position_name').val(data.PositionName ?? '')
     $('#area_id').val(data.AreaId ?? '')
     $('#modal_position').modal('show')
+}
+async function deleteData(data) {
+    if (!confirm('Are you sure to delete this area?')) return;
+    await deletePosition(data.Id)
+    await loadData()
 }
 async function modalSave() {
     if (!Validate()) return alert('Please enter valid information');
@@ -80,12 +61,6 @@ async function modalSave() {
     await loadData()
     $('#modal_position').modal('hide')
 }
-async function deleteData() {
-    if (!confirm('Are you sure to delete this area?')) return;
-    const data = $(this).closest('tr').data('data')
-    await deletePosition(data.Id)
-    $(this).closest('tr').remove()
-}
 function Validate() {
     return ['#position_code', '#position_name', '#area_id'].every(selector => $(selector).val());
 }
@@ -94,4 +69,10 @@ async function loadAreas() {
     $('#area_id').empty()
     $('#area_id').append(`<option value="" hidden selected disabled></option>`)
     areas.forEach(a => $('#area_id').append(`<option value="${a.Id}">${a.AreaName}</option>`))
+}
+function cellClicked(e, cell) {
+    const index = cell.getRow().getPosition();
+    const data = cell.getRow().getData();
+    if (e.target == document.querySelectorAll(`.btn-edit`)[index - 1]) { edit(data) };
+    if (e.target == document.querySelectorAll(`.btn-delete`)[index - 1]) { deleteData(data) };
 }

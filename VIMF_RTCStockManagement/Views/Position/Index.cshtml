@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Position";
 }
+<style>
+    .bi {
+        pointer-events: none
+    }
+</style>
 <h2>Warehouse</h2>
 <div class="col-12">
     <div class="card mb-4">
@@ -11,17 +16,7 @@
         </div>
         <div class="card-body">
             <div class="border border-dark rounded-3">
-                <table class="table align-middle table-hover m-0">
-                    <thead>
-                        <tr>
-                            <th scope="col">Actions</th>
-                            <th scope="col">Position code</th>
-                            <th scope="col">Position name</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody_data">
-                    </tbody>
-                </table>
+                <div id="position_table"></div>
             </div>
         </div>
     </div>
