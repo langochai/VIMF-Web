@@ -81,4 +81,5 @@ function cellClicked(e, cell) {
     const data = cell.getRow().getData();
     if (e.target == document.querySelectorAll(`.btn-edit`)[index - 1]) { edit(data) };
     if (e.target == document.querySelectorAll(`.btn-delete`)[index - 1]) { deleteData(data) };
+    $('#btn_save').data('current', index - 1)
 }

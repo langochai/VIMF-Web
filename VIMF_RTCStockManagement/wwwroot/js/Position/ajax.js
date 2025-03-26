@@ -21,7 +21,11 @@ async function save(data) {
         return await response.json();
     }
     catch (e) {
-        console.error(e)
+        console.log(e)
+        //iziToast.error({
+        //    title: e.Message,
+        //    position: 'topRight'
+        //})
         return {}
     }
 }

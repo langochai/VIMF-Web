@@ -1,6 +1,7 @@
 ﻿using BMS.Models;
 using DASSytemAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace VIMF_RTCStockManagement.Controllers
 {
@@ -45,6 +46,11 @@ namespace VIMF_RTCStockManagement.Controllers
                     await _repo.Insert(position);
                 }
                 return Ok(position);
+            }
+            catch (Exception ex) when (ex.InnerException is SqlException sqlEx && (sqlEx.Number == 2627 || sqlEx.Number == 2601))
+            {
+                var err = new Exception("Code vị trí không thể nhập trùng");
+                return BadRequest();
             }
             catch (Exception ex)
             {

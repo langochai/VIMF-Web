@@ -35,6 +35,7 @@ async function add() {
     $('#position_name').val('')
     await loadAreas()
     $('#modal_position').modal('show')
+    $('#btn_save').data('current', null)
 }
 async function edit(data) {
     await loadAreas()
@@ -62,7 +63,10 @@ async function modalSave() {
     $('#modal_position').modal('hide')
 }
 function Validate() {
-    return ['#position_code', '#position_name', '#area_id'].every(selector => $(selector).val());
+    const hasFilledInputs = ['#position_code', '#position_name', '#area_id'].every(selector => $(selector).val())
+    const data = table.getData().flatMap((row, i) => i !== $('#btn_save').data('current') ? [row.PositionCode] : []);
+    const isNotDuplicated = !data.includes($('#position_code'))
+    return hasFilledInputs;
 }
 async function loadAreas() {
     const areas = await getAreas()
@@ -75,4 +79,5 @@ function cellClicked(e, cell) {
     const data = cell.getRow().getData();
     if (e.target == document.querySelectorAll(`.btn-edit`)[index - 1]) { edit(data) };
     if (e.target == document.querySelectorAll(`.btn-delete`)[index - 1]) { deleteData(data) };
+    $('#btn_save').data('current', index - 1)
 }
