@@ -3,27 +3,33 @@
     $('#btn_add').on('click', add)
     $('#btn_save').on('click', modalSave)
 });
+var table
 async function loadData() {
-    const datas = await getAll();
-    datas.forEach(data => {
-        const row = $(`<tr>
-                            <td>
-                                <a class="btn btn-info btn-icon btn-sm btn-edit">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <a class="btn btn-danger btn-icon btn-sm btn-delete">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                            <td>${data.AreaCode ?? ''}</td>
-                            <td>${data.AreaName ?? ''}</td>
-                            <td>${data.Row ?? ''}</td>
-                        </tr>`)
-        row.find('.btn-edit').on('click', edit)
-        row.find('.btn-delete').on('click', deleteData)
-        row.data('data', data)
-        $('#tbody_data').append(row)
-    })
+    let data = await getAll();
+    const warehouses = await getWarehouse()
+    data = data.map(d => ({
+        ...d,
+        WarehouseName: warehouses.find(a => a.Id == d.WarehouseId)?.WarehouseName,
+        ActionHTML: `<a class="btn btn-info btn-icon btn-sm btn-edit"><i class="bi bi-pencil"></i></a>
+                     <a class="btn btn-danger btn-icon btn-sm btn-delete"><i class="bi bi-trash"></i></a>`
+    }))
+    console.log(data);
+    if (!table) {
+        table = new Tabulator("#area_table", {
+            data: data,
+            layout: "fitColumns",
+            movableRows: true,
+            groupBy: "WarehouseName",
+            columns: [
+                { title: "Actions", field: "ActionHTML", formatter: "html", cellClick: cellClicked },
+                { title: "Area Code", field: "AreaCode" },
+                { title: "Area Name", field: "AreaName" },
+                { title: "Row", field: "Row" },
+            ],
+        });
+    } else {
+        table.replaceData(data)
+    }
 }
 async function add() {
     $('#area_Id').val('')
@@ -33,9 +39,8 @@ async function add() {
     await loadWarehouse()
     $('#modal_area').modal('show')
 }
-async function edit() {
+async function edit(data) {
     await loadWarehouse()
-    const data = $(this).closest('tr').data('data')
     $('#area_Id').val(data.Id ?? 0)
     $('#area_code').val(data.AreaCode ?? '')
     $('#area_name').val(data.AreaName ?? '')
@@ -57,11 +62,10 @@ async function modalSave() {
     await loadData()
     $('#modal_area').modal('hide')
 }
-async function deleteData() {
+async function deleteData(data) {
     if (!confirm('Are you sure to delete this area?')) return;
-    const data = $(this).closest('tr').data('data')
     await deleteArea(data.Id)
-    $(this).closest('tr').remove()
+    await loadData()
 }
 function Validate() {
     return ['#area_code', '#area_name', '#row', '#warehouse_id'].every(selector => $(selector).val());
@@ -71,4 +75,10 @@ async function loadWarehouse() {
     $('#warehouse_id').empty()
     $('#warehouse_id').append(`<option value="" hidden selected disabled></option>`)
     warehouse.forEach(wh => $('#warehouse_id').append(`<option value="${wh.Id}">${wh.WarehouseName}</option>`))
+}
+function cellClicked(e, cell) {
+    const index = cell.getRow().getPosition();
+    const data = cell.getRow().getData();
+    if (e.target == document.querySelectorAll(`.btn-edit`)[index - 1]) { edit(data) };
+    if (e.target == document.querySelectorAll(`.btn-delete`)[index - 1]) { deleteData(data) };
 }
