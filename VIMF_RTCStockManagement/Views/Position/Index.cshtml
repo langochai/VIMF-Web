@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Position";
+}
+<h2>Warehouse</h2>
+<div class="col-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <button type="button" class="btn btn-primary" id="btn_add">
+                <i class="bi bi-plus"></i> Add
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="border border-dark rounded-3">
+                <table class="table align-middle table-hover m-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Position code</th>
+                            <th scope="col">Position name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_data">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal_position" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Position detail
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" class="form-control" id="position_id">
+
+                    <div class="mb-3">
+                        <label for="position_code" class="form-label text-start">
+                            Position code <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="position_code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="position_name" class="form-label text-start">
+                            Position name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="position_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="area_id" class="form-label text-start">
+                            Area <span class="text-danger">*</span>
+                        </label>
+                        <select type="number" class="form-control" id="area_id" required>
+                            <option value="" hidden selected disabled></option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" id="btn_save">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Position/ajax.js"></script>
+<script src="~/js/Position/Position.js"></script>

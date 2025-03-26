@@ -14,6 +14,7 @@ namespace VIMF_RTCStockManagement.Controllers
             _repo = repo;
         }
 
+        [HttpGet("")]
         [HttpGet("Index")]
         public IActionResult Index()
         {

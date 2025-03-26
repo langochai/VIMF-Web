@@ -21,15 +21,13 @@ namespace VIMF_RTCStockManagement.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CreateExportWarehouse(string itemCode, int warehouseID, int positionID, [FromBody] List<SerialNumberDTO> lstSerial)
+        public async Task<IActionResult> CreateExportWarehouse(string itemCode, int warehouseID, int positionID,
+            [FromBody] List<SerialNumberDTO> lstSerial)
         {
             try
             {
                 Material material = await _repo.FindModel<Material>(x => x.MaterialCode == itemCode);
-                if (material == null)
-                {
-                    return BadRequest("Không tìm thấy vật tư!");
-                }
+                if (material == null) return BadRequest("Không tìm thấy vật tư!");
 
                 ExportWarehouse exportWarehouse = new()
                 {
@@ -74,11 +72,6 @@ namespace VIMF_RTCStockManagement.Controllers
             }
         }
 
-        public string GenerateExportCode()
-        {
-            return "PXK" + DateTime.Now.ToString("yyMMddHHmmssfff");
-        }
-
         public async Task<IActionResult> ExportWarehouseModula(string itemCode, int warehouseID, int quantity)
         {
             // Check số lượng trong kho modula
@@ -90,6 +83,11 @@ namespace VIMF_RTCStockManagement.Controllers
             // Tạo phiếu nhập kho gá con
 
             return Ok();
+        }
+
+        public string GenerateExportCode()
+        {
+            return "PXK" + DateTime.Now.ToString("yyMMddHHmmssfff");
         }
     }
 }

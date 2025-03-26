@@ -26,7 +26,8 @@ namespace VIMF_RTCStockManagement.Controllers
         {
             try
             {
-                List<spGetPositionItemResult> result = await _repo.ExecuteStoredProcedure<spGetPositionItemResult>(p => p.spGetPositionItemAsync(itemCode, warehouseID));
+                List<spGetPositionItemResult> result = await _repo.ExecuteStoredProcedure<spGetPositionItemResult>(
+                        p => p.spGetPositionItemAsync(itemCode, warehouseID));
                 return Ok(result.FirstOrDefault());
             }
             catch (Exception ex)
@@ -36,7 +37,8 @@ namespace VIMF_RTCStockManagement.Controllers
         }
 
         [HttpPost("CreateImportWarehouse")]
-        public async Task<IActionResult> CreateImportWarehouse(string itemCode, int warehouseID, int positionID, [FromBody] List<SerialNumberDTO> lstSerial)
+        public async Task<IActionResult> CreateImportWarehouse(string itemCode, int warehouseID, int positionID,
+            [FromBody] List<SerialNumberDTO> lstSerial)
         {
             Material material = await _repo.FindModel<Material>(x => x.MaterialCode == itemCode);
             if (material is null || material.Id <= 0)
@@ -106,7 +108,8 @@ namespace VIMF_RTCStockManagement.Controllers
         }
 
         [HttpPost("ChangePosition")]
-        public async Task<IActionResult> ChangePosition(string itemCode, int warehouseID, int positionID, int newPositionID, [FromBody] List<SerialNumberDTO> lstSerial)
+        public async Task<IActionResult> ChangePosition(string itemCode, int warehouseID, int positionID, int newPositionID,
+            [FromBody] List<SerialNumberDTO> lstSerial)
         {
             try
             {
@@ -129,7 +132,9 @@ namespace VIMF_RTCStockManagement.Controllers
         {
             try
             {
-                List<spGetEmptyPositionsResult> result = await _repo.ExecuteStoredProcedure<spGetEmptyPositionsResult>(p => p.spGetEmptyPositionsAsync());
+                List<spGetEmptyPositionsResult> result =
+                    await _repo.ExecuteStoredProcedure<spGetEmptyPositionsResult>(
+                        p => p.spGetEmptyPositionsAsync());
                 return Ok(result);
             }
             catch (Exception ex)
@@ -150,6 +155,37 @@ namespace VIMF_RTCStockManagement.Controllers
             // Tạo phiếu nhập cho kho Modula
 
             return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateTicket(int Id, int status)
+        {
+            try
+            {
+                var ticket = await _repo.GetById<ImportWarehouse>(Id);
+                if (ticket is null) return BadRequest(new { Message = "Phiếu nhập không tồn tại" });
+                ticket.Status = status;
+                await _repo.Update(ticket);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetDetails(int Id)
+        {
+            try
+            {
+                var ticket = await _repo.GetById<ImportWarehouse>(Id);
+                if (ticket is null) return BadRequest(new { Message = "Phiếu nhập không tồn tại" });
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

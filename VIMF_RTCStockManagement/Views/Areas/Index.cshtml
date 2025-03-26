@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Area";
+}
+<h2>Warehouse</h2>
+<div class="col-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <button type="button" class="btn btn-primary" id="btn_add">
+                <i class="bi bi-plus"></i> Add
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="border border-dark rounded-3">
+                <table class="table align-middle table-hover m-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Area code</th>
+                            <th scope="col">Area name</th>
+                            <th scope="col">Row</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_data">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal_area" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Area detail
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" class="form-control" id="area_Id">
+
+                    <div class="mb-3">
+                        <label for="area_code" class="form-label text-start">
+                            Area code <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="area_code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="area_name" class="form-label text-start">
+                            Area name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="area_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="row" class="form-label text-start">
+                            Row <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" class="form-control" id="row" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="warehouse_id" class="form-label text-start">
+                            Warehouse <span class="text-danger">*</span>
+                        </label>
+                        <select type="number" class="form-control" id="warehouse_id" required>
+                            <option value="" hidden selected disabled></option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" id="btn_save">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Area/ajax.js"></script>
+<script src="~/js/Area/Area.js"></script>
