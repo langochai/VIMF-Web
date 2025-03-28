@@ -1,6 +1,8 @@
 ﻿using BMS.Data;
 using DASSytemAPI.Repository;
 using Microsoft.EntityFrameworkCore;
+using VIMF_RTCStockManagement.Common;
+using VIMF_RTCStockManagement.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,9 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = null; // Không đổi tên property
 });
-
+builder.Services.AddSingleton<ConnectionStringProvider>();
+builder.Services.AddSingleton<SqlDependencyService>();
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,5 +44,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapHub<NotificationHub>("/notificationHub");
+app.Services.GetService<SqlDependencyService>();
 app.Run();

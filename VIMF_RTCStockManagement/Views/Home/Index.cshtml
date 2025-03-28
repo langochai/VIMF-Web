@@ -1,7 +1,217 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
-
-<div class="text-center">
-
+<link href="~/css/home/styles.css" rel="stylesheet" />
+<script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+<div class="row">
+    <div class="warehouse-start col-12 col-md-6">
+        <div class="w-100 h-100 frame d-flex flex-column p-2">
+            <div class="frame-header text-center">
+                Kho number oăn
+            </div>
+            <div class="frame-body">
+                <div class="row">
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="frame-footer">
+            </div>
+        </div>
+    </div>
+    <div class="warehouse-end col-12 col-md-6">
+        <div class="w-100 h-100 frame d-flex flex-column p-2">
+            <div class="frame-header text-center">
+                Kho number thờ u thu
+            </div>
+            <div class="frame-body">
+                <div class="row">
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 p-3">
+                        <div class="frame-cell border h-100">
+                            <div class="frame-cell-inner row text-center">
+                                <div class="">A1</div>
+                                <div class="">M1-1</div>
+                                <div class="">3-1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="frame-footer">
+            </div>
+        </div>
+    </div>
 </div>
+<script src="~/js/home/dashboard.js"></script>

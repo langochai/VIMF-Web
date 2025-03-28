@@ -1,0 +1,49 @@
+﻿html, .app-body {
+    font-size: 16px;
+    font-size: 1vw;
+    font-size: 1vmax;
+}
+
+.warehouse-start, .warehouse-end {
+    height: calc(100vh - 2.5rem - 120px)
+}
+
+.frame {
+    border: 1px solid silver;
+    /*    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, 0.2);
+}
+
+.frame-header {
+    font-weight: bolder;
+    font-size: 3rem;
+    padding: 1rem 0;
+}
+
+.frame-body {
+    flex-grow: 1;
+    display: grid;
+    grid-auto-rows: 1fr;
+}
+
+.frame-cell {
+    box-shadow: inset 5px 5px 10px silver;
+    padding: 0.25rem;
+}
+
+.frame-cell-inner {
+    font-weight: bolder;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+    .frame-cell-inner div {
+        align-content: center;
+    }
+.warehouse-start .frame-cell {
+    background-color: skyblue;
+}
+
+.warehouse-end .frame-cell {
+    background-color: yellow;
+}
