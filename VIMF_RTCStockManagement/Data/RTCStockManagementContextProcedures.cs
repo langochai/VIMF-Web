@@ -43,6 +43,39 @@ namespace BMS.Data
             _context = context;
         }
 
+        public virtual async Task<List<spGetEmptyPositionItemResult>> spGetEmptyPositionItemAsync(string ItemCode, int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "ItemCode",
+                    Size = 300,
+                    Value = ItemCode ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "WarehouseID",
+                    Value = WarehouseID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<spGetEmptyPositionItemResult>("EXEC @returnValue = [dbo].[spGetEmptyPositionItem] @ItemCode = @ItemCode, @WarehouseID = @WarehouseID", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<spGetEmptyPositionsResult>> spGetEmptyPositionsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -63,6 +96,26 @@ namespace BMS.Data
             return _;
         }
 
+        public virtual async Task<List<spGetExportWarehouseResult>> spGetExportWarehouseAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<spGetExportWarehouseResult>("EXEC @returnValue = [dbo].[spGetExportWarehouse]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<spGetImportWarehouseResult>> spGetImportWarehouseAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -77,6 +130,58 @@ namespace BMS.Data
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<spGetImportWarehouseResult>("EXEC @returnValue = [dbo].[spGetImportWarehouse]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<spGetImportWarehouseByIDResult>> spGetImportWarehouseByIDAsync(int? ImportWarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "ImportWarehouseID",
+                    Value = ImportWarehouseID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<spGetImportWarehouseByIDResult>("EXEC @returnValue = [dbo].[spGetImportWarehouseByID] @ImportWarehouseID = @ImportWarehouseID", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<spGetPositionByWarehouseIDResult>> spGetPositionByWarehouseIDAsync(int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "WarehouseID",
+                    Value = WarehouseID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<spGetPositionByWarehouseIDResult>("EXEC @returnValue = [dbo].[spGetPositionByWarehouseID] @WarehouseID = @WarehouseID", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -110,6 +215,64 @@ namespace BMS.Data
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<spGetPositionItemResult>("EXEC @returnValue = [dbo].[spGetPositionItem] @ItemCode = @ItemCode, @WarehouseID = @WarehouseID", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<spGetPositionOfAllMaterialResult>> spGetPositionOfAllMaterialAsync(int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "WarehouseID",
+                    Value = WarehouseID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<spGetPositionOfAllMaterialResult>("EXEC @returnValue = [dbo].[spGetPositionOfAllMaterial] @WarehouseID = @WarehouseID", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<spGetQuantityOfMaterialInWarehouseResult>> spGetQuantityOfMaterialInWarehouseAsync(int? MaterialID, int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "MaterialID",
+                    Value = MaterialID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "WarehouseID",
+                    Value = WarehouseID ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<spGetQuantityOfMaterialInWarehouseResult>("EXEC @returnValue = [dbo].[spGetQuantityOfMaterialInWarehouse] @MaterialID = @MaterialID, @WarehouseID = @WarehouseID", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

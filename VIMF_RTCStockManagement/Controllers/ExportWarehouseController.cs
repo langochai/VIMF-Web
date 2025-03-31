@@ -26,7 +26,7 @@ namespace VIMF_RTCStockManagement.Controllers
         {
             try
             {
-                Material material = await _repo.FindModel<Material>(x => x.MaterialCode == itemCode);
+                Material material = await _repo.FindModel<Material>(x => x.MaterialCode == itemCode && x.WarehouseId == warehouseID);
                 if (material == null) return BadRequest("Không tìm thấy vật tư!");
 
                 ExportWarehouse exportWarehouse = new()
@@ -72,15 +72,36 @@ namespace VIMF_RTCStockManagement.Controllers
             }
         }
 
-        public async Task<IActionResult> ExportWarehouseModula(string itemCode, int warehouseID, int quantity)
+        public async Task<IActionResult> ExportWarehouse(string itemCode, int warehouseID, int quantity)
         {
-            // Check số lượng trong kho modula
 
-            //Nếu k đủ thì báo lỗi
+            Material material = await _repo.FindModel<Material>(x => x.MaterialCode == itemCode && x.WarehouseId == warehouseID);
+            if (material == null)
+            {
+                return BadRequest("KHông tồn tại Vật tư");
+            }
+            ExportWarehouse exportWarehouse = new()
+            {
+                ExportCode = GenerateExportCode(),
+                WarehouseId = warehouseID,
+                Status = 1,
+                CreatedBy = "Admin",
+                CreatedDate = DateTime.Now,
+                EmployeeId = 1,
+                Stt = 1
+            };
 
-            //Tạo phiếu xuất kho modula
+            await _repo.Insert(exportWarehouse);
 
-            // Tạo phiếu nhập kho gá con
+            ExportWarehouseDetail exportWarehouseDetail = new()
+            {
+                ExportWarehouseId = exportWarehouse.Id,
+                MaterialId = material.Id,
+                Status = 1,
+                StatusPriority = 1,
+                RequestDate = DateTime.Now,
+                Quantity = quantity
+            };
 
             return Ok();
         }

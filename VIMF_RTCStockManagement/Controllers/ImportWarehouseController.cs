@@ -40,7 +40,7 @@ namespace VIMF_RTCStockManagement.Controllers
         public async Task<IActionResult> CreateImportWarehouse(string itemCode, int warehouseID, int positionID,
             [FromBody] List<SerialNumberDTO> lstSerial)
         {
-            Material material = await _repo.FindModel<Material>(x => x.MaterialCode == itemCode);
+            Material material = await _repo.FindModel<Material>(x => x.MaterialCode == itemCode && x.WarehouseId == warehouseID);
             if (material is null || material.Id <= 0)
             {
                 material = new Material

@@ -14,6 +14,8 @@ public partial class RTCStockManagementContext : DbContext
     {
     }
 
+    public virtual DbSet<AgvWork> AgvWorks { get; set; }
+
     public virtual DbSet<Area> Areas { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
@@ -42,6 +44,15 @@ public partial class RTCStockManagementContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AgvWork>(entity =>
+        {
+            entity.ToTable("AgvWork");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.AgvWork1).HasColumnName("AgvWork");
+            entity.Property(e => e.DateRun).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<Area>(entity =>
         {
             entity.ToTable("Area");
@@ -50,6 +61,7 @@ public partial class RTCStockManagementContext : DbContext
             entity.Property(e => e.AreaCode)
                 .HasMaxLength(150)
                 .IsUnicode(false);
+            entity.Property(e => e.AreaName).HasMaxLength(150);
             entity.Property(e => e.WarehouseId).HasColumnName("WarehouseID");
         });
 
@@ -75,7 +87,7 @@ public partial class RTCStockManagementContext : DbContext
 
         modelBuilder.Entity<ExportWarehouse>(entity =>
         {
-            entity.ToTable("ExportWarehouse");
+            entity.ToTable("ExportWarehouse", tb => tb.HasTrigger("tr_Listener_2"));
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CreateDatePriority).HasColumnType("datetime");
@@ -124,9 +136,7 @@ public partial class RTCStockManagementContext : DbContext
 
             entity.ToTable("ImportSerialNumber");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ImportWarehouseDetailId).HasColumnName("ImportWarehouseDetailID");
             entity.Property(e => e.MaterialId).HasColumnName("MaterialID");
             entity.Property(e => e.SerialNumber).HasMaxLength(150);
@@ -134,7 +144,7 @@ public partial class RTCStockManagementContext : DbContext
 
         modelBuilder.Entity<ImportWarehouse>(entity =>
         {
-            entity.ToTable("ImportWarehouse");
+            entity.ToTable("ImportWarehouse", tb => tb.HasTrigger("tr_Listener_1"));
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CreatedBy).HasMaxLength(100);

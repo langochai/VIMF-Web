@@ -15,6 +15,10 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[dbo].[AgvWork]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Area]",
          "ObjectType": 0
       },
@@ -67,7 +71,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[spGetEmptyPositionItem]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[spGetEmptyPositions]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spGetExportWarehouse]",
          "ObjectType": 1
       },
       {
@@ -75,7 +87,23 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[spGetImportWarehouseByID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spGetPositionByWarehouseID]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[spGetPositionItem]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spGetPositionOfAllMaterial]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spGetQuantityOfMaterialInWarehouse]",
          "ObjectType": 1
       }
    ],

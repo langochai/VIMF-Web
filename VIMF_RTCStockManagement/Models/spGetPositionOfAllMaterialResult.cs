@@ -6,34 +6,37 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BMS.Models
 {
-    public partial class spGetImportWarehouseResult
+    public partial class spGetPositionOfAllMaterialResult
     {
         public int ID { get; set; }
         public int? STT { get; set; }
+        [StringLength(50)]
+        public string MaterialCode { get; set; }
         [StringLength(150)]
-        public string ImportCode { get; set; }
+        public string MaterialName { get; set; }
+        public int? UnitID { get; set; }
         public int? WarehouseID { get; set; }
-        public int? EmployeeID { get; set; }
-        public int? Status { get; set; }
+        public int? TonDau { get; set; }
+        public int? Nhap { get; set; }
+        public int? Xuat { get; set; }
+        public int? TonCuoi { get; set; }
+        [StringLength(250)]
+        public string Note { get; set; }
         [StringLength(100)]
         public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         [StringLength(100)]
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public DateTime? ImportWarehouseDate { get; set; }
-        public int? ExportWarehouseID { get; set; }
-        public int? ImportType { get; set; }
-        public int? Quantity { get; set; }
-        public DateTime? RequestDate { get; set; }
+        public int? Inventory { get; set; }
+        public int? PositionID { get; set; }
         [StringLength(50)]
-        public string MaterialCode { get; set; }
-        [StringLength(150)]
-        public string MaterialName { get; set; }
+        public string PositionName { get; set; }
         [StringLength(50)]
         public string PositionCode { get; set; }
         [StringLength(150)]
         public string AreaCode { get; set; }
         public int? Row { get; set; }
+        public int? StockQuantity { get; set; }
     }
 }

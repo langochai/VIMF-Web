@@ -13,8 +13,14 @@ namespace BMS.Data
 {
     public partial interface IRTCStockManagementContextProcedures
     {
+        Task<List<spGetEmptyPositionItemResult>> spGetEmptyPositionItemAsync(string ItemCode, int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<spGetEmptyPositionsResult>> spGetEmptyPositionsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<spGetExportWarehouseResult>> spGetExportWarehouseAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<spGetImportWarehouseResult>> spGetImportWarehouseAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<spGetImportWarehouseByIDResult>> spGetImportWarehouseByIDAsync(int? ImportWarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<spGetPositionByWarehouseIDResult>> spGetPositionByWarehouseIDAsync(int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<spGetPositionItemResult>> spGetPositionItemAsync(string ItemCode, int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<spGetPositionOfAllMaterialResult>> spGetPositionOfAllMaterialAsync(int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<spGetQuantityOfMaterialInWarehouseResult>> spGetQuantityOfMaterialInWarehouseAsync(int? MaterialID, int? WarehouseID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
     }
 }

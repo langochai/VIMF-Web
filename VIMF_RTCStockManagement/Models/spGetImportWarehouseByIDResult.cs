@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BMS.Models
 {
-    public partial class spGetImportWarehouseResult
+    public partial class spGetImportWarehouseByIDResult
     {
         public int ID { get; set; }
         public int? STT { get; set; }
@@ -24,16 +24,15 @@ namespace BMS.Models
         public DateTime? ImportWarehouseDate { get; set; }
         public int? ExportWarehouseID { get; set; }
         public int? ImportType { get; set; }
+        public int? MaterialID { get; set; }
         public int? Quantity { get; set; }
-        public DateTime? RequestDate { get; set; }
+        public int? Row { get; set; }
+        [StringLength(50)]
+        public string PositionCode { get; set; }
+        public int? PositionID { get; set; }
         [StringLength(50)]
         public string MaterialCode { get; set; }
         [StringLength(150)]
         public string MaterialName { get; set; }
-        [StringLength(50)]
-        public string PositionCode { get; set; }
-        [StringLength(150)]
-        public string AreaCode { get; set; }
-        public int? Row { get; set; }
     }
 }
