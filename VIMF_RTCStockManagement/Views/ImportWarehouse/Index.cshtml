@@ -1,0 +1,83 @@
+﻿<div class="row">
+    <div class="col-12 col-sm-4">
+        <div class="mb-2">
+            <label for="import_warehouse" class="form-label">Import warehouse</label>
+            <select class="form-control" id="import_warehouse">
+            </select>
+        </div>
+        <div class="mb-2">
+            <label for="action_type" class="form-label">Type</label>
+            <select class="form-control" id="action_type">
+                <option value="1">1 - Manual</option>
+                <option value="2">2 - Automatic</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <button type="button" class="btn btn-primary" id="btn_add">
+                <i class="bi bi-plus"></i> Add
+            </button>
+        </div>
+    </div>
+    <div class="col-12 col-sm-8">
+        <table class="table table-primary table-hover">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Import Warehouse Id</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody class="tickets">
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modal_details" tabindex="-1" aria-labelledby="details_header"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="details_header">
+                    Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <label for="material" class="form-label">Material</label>
+                        <select class="form-control" id="material"></select>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity">
+                    </div>
+                </div>
+                <table class="table table-primary table-hover">
+                    <thead>
+                        <tr>
+                            <th><button class="btn btn-primary" id="btn_add_details"><i class="bi bi-plus"></i></button></th>
+                            <th>Material</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody class="details">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" id="btn_save">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/ImportWarehouse/ajax.js"></script>
+<script src="~/js/ImportWarehouse/ImportWarehouse.js" defer></script>
