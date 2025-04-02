@@ -172,6 +172,7 @@ namespace VIMF_RTCStockManagement.Controllers
                 return BadRequest(ex);
             }
         }
+
         [HttpGet("GetDetails")]
         public async Task<IActionResult> GetDetails(int Id)
         {
@@ -186,6 +187,7 @@ namespace VIMF_RTCStockManagement.Controllers
                 return BadRequest(ex);
             }
         }
+
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -199,8 +201,9 @@ namespace VIMF_RTCStockManagement.Controllers
                 return BadRequest(ex);
             }
         }
+
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(int importId, int actionType)
+        public async Task<IActionResult> Create(int importId, int actionType, int positionId)
         {
             try
             {
@@ -209,7 +212,8 @@ namespace VIMF_RTCStockManagement.Controllers
                     Id = 0,
                     ImportCode = GenerateImportCode(),
                     WarehouseId = importId,
-                    ImportType = actionType
+                    ImportType = actionType,
+                    PositionId = positionId
                 });
                 return Ok(ticket);
             }
@@ -218,6 +222,7 @@ namespace VIMF_RTCStockManagement.Controllers
                 return BadRequest(ex);
             }
         }
+
         [HttpGet("GetTicket")]
         public async Task<IActionResult> GetTicket(int id)
         {
@@ -232,6 +237,7 @@ namespace VIMF_RTCStockManagement.Controllers
                 return BadRequest(ex);
             }
         }
+
         [HttpPost("SaveDetails")]
         public async Task<IActionResult> SaveDetails([FromBody] ImportWarehouseDetail detail)
         {
@@ -252,6 +258,7 @@ namespace VIMF_RTCStockManagement.Controllers
                 return BadRequest(ex);
             }
         }
+
         [HttpDelete("DeleteDetails")]
         public async Task<IActionResult> DeleteDetails(int id)
         {

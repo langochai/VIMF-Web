@@ -32,4 +32,5 @@ public partial class ExportWarehouse
     public int? StatusPriority { get; set; }
 
     public DateTime? CreateDatePriority { get; set; }
+    public int? PositionId { get; set; }
 }

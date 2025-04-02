@@ -32,4 +32,5 @@ public partial class ImportWarehouse
     public int? ExportWarehouseId { get; set; }
 
     public int? ImportType { get; set; }
+    public int? PositionId { get; set; }
 }

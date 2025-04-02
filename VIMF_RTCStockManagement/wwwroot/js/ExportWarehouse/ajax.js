@@ -8,9 +8,9 @@
         return []
     }
 }
-async function getImportWarehouses() {
+async function getExportWarehouses() {
     try {
-        const response = await fetch('/ImportWarehouse/GetAll')
+        const response = await fetch('/ExportWarehouse/GetAll')
         return await response.json();
     }
     catch (e) {
@@ -18,15 +18,15 @@ async function getImportWarehouses() {
         return []
     }
 }
-async function postTicket(importId, actionType, positionId) {
+async function postTicket(exportId, actionType, positionId) {
     try {
-        const response = await fetch('/ImportWarehouse/Create', {
+        const response = await fetch('/ExportWarehouse/Create', {
             method: 'POST',
             headers: {
                 //'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded;'
             },
-            body: new URLSearchParams({ importId, actionType, positionId })
+            body: new URLSearchParams({ exportId, actionType, positionId })
         })
         return await response.json();
     }
@@ -57,7 +57,7 @@ async function getPositions() {
 }
 async function getDetails(id) {
     try {
-        const response = await fetch(`/ImportWarehouse/GetTicket?id=${id}`)
+        const response = await fetch(`/ExportWarehouse/GetTicket?id=${id}`)
         return await response.json();
     }
     catch (e) {
@@ -67,7 +67,7 @@ async function getDetails(id) {
 }
 async function postDetails(data) {
     try {
-        const response = await fetch('/ImportWarehouse/SaveDetails', {
+        const response = await fetch('/ExportWarehouse/SaveDetails', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -84,7 +84,7 @@ async function postDetails(data) {
 }
 async function deleteDetails(id) {
     try {
-        const response = await fetch(`/ImportWarehouse/DeleteDetails?id=${id}`, {
+        const response = await fetch(`/ExportWarehouse/DeleteDetails?id=${id}`, {
             method: 'DELETE',
         })
         return true

@@ -1,5 +1,5 @@
 ﻿$(async () => {
-    await showImportList()
+    await showExportList()
     await showWarehouseInputs()
     await showPositions()
     $('#btn_add').on('click', add)
@@ -9,9 +9,9 @@
 })
 async function showWarehouseInputs() {
     const warehouses = await getWarehouses()
-    $('#import_warehouse').empty()
+    $('#export_warehouse').empty()
     warehouses.forEach(wh => {
-        $('#import_warehouse').append($(`<option value="${wh.Id}">${wh.WarehouseCode} - ${wh.WarehouseName}</option>`))
+        $('#export_warehouse').append($(`<option value="${wh.Id}">${wh.WarehouseCode} - ${wh.WarehouseName}</option>`))
     })
 }
 async function showMaterials() {
@@ -28,8 +28,8 @@ async function showPositions() {
         $('#position').append($(`<option value="${m.Id}">${m.PositionCode} - ${m.PositionName}</option>`))
     })
 }
-async function showImportList() {
-    let data = await getImportWarehouses()
+async function showExportList() {
+    let data = await getExportWarehouses()
     const warehouses = await getWarehouses()
     data = data.map(d => ({
         ...d,
@@ -39,19 +39,19 @@ async function showImportList() {
     data.forEach(d => {
         $('.tickets').append(`
             <tr class="table-primary" style="cursor:pointer" data-id="${d.Id}">
-                <td>${d.ImportCode}</td> 
+                <td>${d.ExportCode}</td> 
                 <td>${d.WarehouseName}</td> 
-                <td>${d.ImportType == 1 ? '1 - Manual' : '2 - Automatic'}</td> 
+                <td>${d.ExportType == 1 ? '1 - Manual' : '2 - Automatic'}</td> 
             </tr>
         `)
     })
 }
 async function add() {
-    const importWarehouseId = +$('#import_warehouse').val()
+    const exportWarehouseId = +$('#export_warehouse').val()
     const actionType = +$('#action_type').val()
     const positionId = +$('#action_type').val()
-    await postTicket(importWarehouseId, actionType, positionId)
-    await showImportList()
+    await postTicket(exportWarehouseId, actionType, positionId)
+    await showExportList()
 }
 async function loadDetails(id) {
     $('.details').empty()
@@ -106,7 +106,7 @@ async function addDetails() {
     const MaterialId = +$('#material').val()
     const Quantity = +$('#quantity').val()
     const PositionId = +$('#position').val()
-    const result = await postDetails({ MaterialId, Quantity, PositionId, ImportWarehouseId: id })
+    const result = await postDetails({ MaterialId, Quantity, PositionId, ExportWarehouseId: id })
     loadDetails(id)
 }
 async function detailActions() {
@@ -119,7 +119,7 @@ async function editDetail(row) {
     const MaterialId = +row.find('.material-id select').val()
     const Quantity = +row.find('.material-quantity input').val()
     const PositionId = +row.find('.position-id select').val()
-    const result = await postDetails({ Id, MaterialId, Quantity, PositionId, ImportWarehouseId: warehouseId })
+    const result = await postDetails({ Id, MaterialId, Quantity, PositionId, ExportWarehouseId: warehouseId })
     const ticketId = $('#modal_details').attr('data-id')
     loadDetails(ticketId)
 }

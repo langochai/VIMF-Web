@@ -14,8 +14,8 @@ namespace VIMF_RTCStockManagement.Controllers
         {
             _repo = repo;
         }
-
-        [Route("Index")]
+        [HttpGet("")]
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             return View();
@@ -106,9 +106,125 @@ namespace VIMF_RTCStockManagement.Controllers
             return Ok();
         }
 
-        public string GenerateExportCode()
+        private string GenerateExportCode()
         {
             return "PXK" + DateTime.Now.ToString("yyMMddHHmmssfff");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateTicket(int Id, int status)
+        {
+            try
+            {
+                var ticket = await _repo.GetById<ExportWarehouse>(Id);
+                if (ticket is null) return BadRequest(new { Message = "Phiếu nhập không tồn tại" });
+                ticket.Status = status;
+                await _repo.Update(ticket);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("GetDetails")]
+        public async Task<IActionResult> GetDetails(int Id)
+        {
+            try
+            {
+                var ticket = await _repo.GetById<ExportWarehouse>(Id);
+                if (ticket is null) return BadRequest(new { Message = "Phiếu nhập không tồn tại" });
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                List<ExportWarehouse> lstExportWarehouse = await _repo.GetAll<ExportWarehouse>();
+                return Ok(lstExportWarehouse);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(int exportId)
+        {
+            try
+            {
+                var ticket = await _repo.Insert<ExportWarehouse>(new ExportWarehouse
+                {
+                    Id = 0,
+                    ExportCode = GenerateExportCode(),
+                    WarehouseId = exportId
+                });
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("GetTicket")]
+        public async Task<IActionResult> GetTicket(int id)
+        {
+            try
+            {
+                List<ExportWarehouseDetail> lstDetails = await _repo.FindByExpression<ExportWarehouseDetail>
+                    (d => d.ExportWarehouseId == id);
+                return Ok(lstDetails);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("SaveDetails")]
+        public async Task<IActionResult> SaveDetails([FromBody] ExportWarehouseDetail detail)
+        {
+            try
+            {
+                if (detail.Id > 0)
+                {
+                    await _repo.Update(detail);
+                }
+                else
+                {
+                    await _repo.Insert(detail);
+                }
+                return Ok(detail);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("DeleteDetails")]
+        public async Task<IActionResult> DeleteDetails(int id)
+        {
+            try
+            {
+                ExportWarehouseDetail detail = await _repo.GetById<ExportWarehouseDetail>(id);
+                await _repo.Delete(detail);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
